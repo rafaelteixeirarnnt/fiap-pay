@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: fiap-pay
+
+  docker:
+    compose:
+      file: ./docker-compose.yaml
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/fiappay?createDatabaseIfNotExist=true
+    driver-class-name: org.postgresql.Driver
+    username: root
+    password: root
+    hikari:
+      schema: ${spring.application.name}
+  liquibase:
+    change-log: db/changelog/changelog-master.xml

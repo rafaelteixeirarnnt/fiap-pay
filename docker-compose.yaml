@@ -1,0 +1,9 @@
+services:
+  db:
+    image: postgres:13
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: fiappay
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
