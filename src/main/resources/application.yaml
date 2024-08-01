@@ -15,3 +15,6 @@ spring:
       schema: ${spring.application.name}
   liquibase:
     change-log: db/changelog/changelog-master.xml
+
+jwt:
+  secret: 79063e8037fff16d297a1fe65136f1251126cddb2cc9870ecf8d653835538e85

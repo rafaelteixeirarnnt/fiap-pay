@@ -46,8 +46,7 @@ public class AutenticacaoController {
             Se as credenciais forem válidas, um token de acesso será retornado, permitindo o acesso seguro a outros recursos da API.
             """)
     public ResponseEntity<ResponseAutenticacaoVO> autenticar(@RequestBody @Validated RequestLoginVO request) {
-        this.service.logar(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(this.service.logar(request));
     }
 
 }
