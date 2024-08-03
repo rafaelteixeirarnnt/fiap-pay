@@ -4,6 +4,7 @@ import br.com.fiap.fiappay.models.Usuarios;
 import br.com.fiap.fiappay.security.DateTimeProvider;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +49,11 @@ public class JwtService {
         var require = JWT.require(Algorithm.HMAC256(SECRET))
                 .acceptExpiresAt(0)
                 .build();
-        require.verify(token);
-        return JWT.decode(token);
+        var decodedJWT = require.verify(token);
+        if (decodedJWT.getExpiresAt().before(new Date())) {
+            throw new JWTVerificationException("Token expirado");
+        }
+        return decodedJWT;
     }
 
     public String generateToken(Usuarios usuario) {
