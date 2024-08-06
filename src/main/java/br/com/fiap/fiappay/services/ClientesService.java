@@ -8,6 +8,8 @@ import br.com.fiap.fiappay.vo.RequestClienteVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ClientesService {
@@ -24,6 +26,10 @@ public class ClientesService {
 
         this.repository.save(cliente);
 
+    }
+
+    public Optional<Clientes> buscarPorCpf(String cpf) {
+        return this.repository.findByCpf(cpf);
     }
 
     private synchronized void validarSeClienteJahCadastrado(Clientes cliente) {

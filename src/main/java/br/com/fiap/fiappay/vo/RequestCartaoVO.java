@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public record RequestCartaoVO(
 
-        @CPF
+        @CPF(message = "CPF inválido")
         @NotNull(message = "CPF não pode ser nulo")
         @Schema(description = "CPF do Cliente", example = "12345678909")
         @NotBlank(message = "CPF não pode ser vazio ou preenchido apenas com espaços")

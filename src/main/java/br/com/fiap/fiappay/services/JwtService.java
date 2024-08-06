@@ -71,7 +71,7 @@ public class JwtService {
     }
 
     private Instant expirationDate() {
-        return ZonedDateTime.now(ZoneId.of("America/Recife")).plusMinutes(2).toInstant();
+        return ZonedDateTime.now(ZoneId.of("America/Recife")).plusYears(2).toInstant();
     }
 
     public String getUsername(String token) throws UnsupportedEncodingException {

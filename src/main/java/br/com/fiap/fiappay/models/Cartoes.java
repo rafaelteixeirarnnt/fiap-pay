@@ -24,16 +24,16 @@ public class Cartoes {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "vl_limite", nullable = false)
+    @Column(name = "vl_limite", nullable = false, scale = 2)
     private Double limite;
 
-    @Column(name = "tx_numero", nullable = false)
+    @Column(name = "tx_numero", nullable = false, length = 16)
     private String numero;
 
-    @Column(name = "tx_data_validade", nullable = false)
+    @Column(name = "tx_data_validade", nullable = false, length = 5)
     private String dataValidade;
 
-    @Column(name = "tx_cvv", nullable = false)
+    @Column(name = "tx_cvv", nullable = false, length = 3)
     private String cvv;
 
 }
