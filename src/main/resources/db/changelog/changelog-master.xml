@@ -6,5 +6,7 @@
 
     <include file="/db/changelog/001/0001-criando-schema.xml"/>
     <include file="/db/changelog/001/0002-criando-tabela-usuarios.xml"/>
+    <include file="/db/changelog/001/0003-criando-tabela-clientes.xml"/>
+    <include file="/db/changelog/001/0004-criando-tabela-cartoes.xml"/>
 
 </databaseChangeLog>
