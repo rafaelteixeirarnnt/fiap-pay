@@ -1,0 +1,37 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Criando tabela de Cartões -->
+    <changeSet id="1" author="Rafael Teixeira">
+        <createTable schemaName="fiappay" tableName="tb_cartoes_clientes">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_cartao" type="UUID">
+                <constraints />
+            </column>
+            <column name="id_cliente" type="UUID">
+                <constraints />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="id_cliente"
+                                 baseTableName="tb_cartoes_clientes"
+                                 baseTableSchemaName="fiappay"
+                                 constraintName="FK_TB_CLIENTES"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tb_clientes"
+                                 referencedTableSchemaName="fiappay"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_cartao"
+                                 baseTableName="tb_cartoes_clientes"
+                                 baseTableSchemaName="fiappay"
+                                 constraintName="FK_TB_CARTOES"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tb_cartoes"
+                                 referencedTableSchemaName="fiappay"/>
+
+    </changeSet>
+</databaseChangeLog>

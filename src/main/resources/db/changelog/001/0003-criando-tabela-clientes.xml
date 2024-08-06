@@ -1,0 +1,41 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Criando tabela de Clientes -->
+    <changeSet id="1" author="Rafael Teixeira">
+        <createTable schemaName="fiappay" tableName="tb_clientes">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tx_cpf" type="VARCHAR(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_nome" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_email" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_telefone" type="VARCHAR(14)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_rua" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_cidade" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_estado" type="VARCHAR(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_cep" type="VARCHAR(8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tx_pais" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
