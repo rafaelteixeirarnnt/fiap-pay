@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
@@ -25,7 +26,7 @@ public class Cartoes {
     private UUID id;
 
     @Column(name = "vl_limite", nullable = false, scale = 2)
-    private Double limite;
+    private BigDecimal limite;
 
     @Column(name = "tx_numero", nullable = false, length = 16)
     private String numero;

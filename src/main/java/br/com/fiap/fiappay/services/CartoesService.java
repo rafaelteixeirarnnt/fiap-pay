@@ -4,12 +4,18 @@ import br.com.fiap.fiappay.controllers.exceptions.NegocioException;
 import br.com.fiap.fiappay.mappers.CartoesMapper;
 import br.com.fiap.fiappay.models.Cartoes;
 import br.com.fiap.fiappay.models.CartoesClientes;
+import br.com.fiap.fiappay.models.Clientes;
 import br.com.fiap.fiappay.repositories.CartoesClientesRepository;
 import br.com.fiap.fiappay.repositories.CartoesRepository;
 import br.com.fiap.fiappay.vo.RequestCartaoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -38,4 +44,39 @@ public class CartoesService {
                 });
     }
 
+    public Cartoes obterCartaoPorNumeroDataValidadeCvvECliente(String numero, String dataValidade, String cvv, Clientes cliente) {
+        var cartao = this.repository.findByNumeroAndDataValidadeAndCvv(numero, dataValidade, cvv)
+                .orElseThrow(() -> new NegocioException("Cartão não localizado"));
+
+        this.cartoesClientesRepository.findByClienteAndCartao(cliente, cartao)
+                .orElseThrow(() -> new NegocioException("Cartão não pertence ao cliente"));
+
+        return cartao;
+    }
+
+    public synchronized void salvarNovoLimite(Cartoes cartao, BigDecimal valorCompra) {
+        cartao.setLimite(cartao.getLimite().subtract(valorCompra));
+        this.repository.save(cartao);
+
+    }
+
+    public void cartaoehValido(Cartoes cartao) {
+        var cartaoDb = this.repository.findById(cartao.getId())
+                .orElseThrow(() -> new NegocioException("Cartão não localizado"));
+
+        var dataValidadeCartao = criarLocalDateComDataValidadeCartao(cartaoDb);
+        var dataAtual = LocalDate.now().withDayOfMonth(1);
+
+        if(dataValidadeCartao.isBefore(dataAtual)) {
+            throw new NegocioException("Cartão vencido");
+        }
+    }
+
+    private LocalDate criarLocalDateComDataValidadeCartao(Cartoes cartaoDb) {
+        var dataValidade = cartaoDb.getDataValidade();
+        var dataValidadeSplit = dataValidade.split("/");
+        var mes = Integer.parseInt(dataValidadeSplit[0]);
+        var ano = Integer.parseInt("20" + dataValidadeSplit[1]);
+        return LocalDate.of(ano, mes, 1);
+    }
 }

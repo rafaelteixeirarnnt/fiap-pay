@@ -79,6 +79,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
+    @ExceptionHandler(SemLimiteException.class)
+    public ResponseEntity<ErrorResponse> handleSemLimiteException(SemLimiteException ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.PAYMENT_REQUIRED;
+        String log = extractLogSnippet(ex);
+        LocalDateTime timestamp = LocalDateTime.now();
+        String errorCode = "PAYMENT_REQUIRED";
+        String path = request.getRequestURI();
+
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), status.value(), log, timestamp, errorCode, path);
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleNegocioException(DataIntegrityViolationException ex, HttpServletRequest request) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
