@@ -2,8 +2,9 @@ package br.com.fiap.fiappay.services;
 
 import br.com.fiap.fiappay.controllers.exceptions.NegocioException;
 import br.com.fiap.fiappay.mappers.CartoesMapper;
+import br.com.fiap.fiappay.models.Cartao;
 import br.com.fiap.fiappay.models.CartoesClientes;
-import br.com.fiap.fiappay.models.Clientes;
+import br.com.fiap.fiappay.models.Cliente;
 import br.com.fiap.fiappay.repositories.CartoesClientesRepository;
 import br.com.fiap.fiappay.repositories.CartoesRepository;
 import br.com.fiap.fiappay.vo.RequestCartaoVO;
@@ -14,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +33,6 @@ public class CartoesService {
 
         this.clientesService.buscarPorCpf(vo.cpf())
                 .ifPresentOrElse(cliente -> {
-
-//                    quantidadeCartoes - Validar se o cliente já possui a quantidade máxima de cartões
                     var cartaoSalvo = this.repository.save(cartao);
                     var cartaoCliente = new CartoesClientes(cliente, cartaoSalvo);
                     this.cartoesClientesRepository.save(cartaoCliente);
@@ -44,7 +41,7 @@ public class CartoesService {
                 });
     }
 
-    public Cartoes obterCartaoPorNumeroDataValidadeCvvECliente(String numero, String dataValidade, String cvv, Clientes cliente) {
+    public Cartao obterCartaoPorNumeroDataValidadeCvvECliente(String numero, String dataValidade, String cvv, Cliente cliente) {
         var cartao = this.repository.findByNumeroAndDataValidadeAndCvv(numero, dataValidade, cvv)
                 .orElseThrow(() -> new NegocioException("Cartão não localizado"));
 
@@ -55,13 +52,13 @@ public class CartoesService {
     }
 
     @Transactional
-    public synchronized void salvarNovoLimite(Cartoes cartao, BigDecimal valorCompra) {
+    public synchronized void salvarNovoLimite(Cartao cartao, BigDecimal valorCompra) {
         cartao.setLimite(cartao.getLimite().subtract(valorCompra));
         this.repository.save(cartao);
 
     }
 
-    public void cartaoehValido(Cartoes cartao) {
+    public void cartaoehValido(Cartao cartao) {
         var cartaoDb = this.repository.findById(cartao.getId())
                 .orElseThrow(() -> new NegocioException("Cartão não localizado"));
 
@@ -73,7 +70,7 @@ public class CartoesService {
         }
     }
 
-    private LocalDate criarLocalDateComDataValidadeCartao(Cartoes cartaoDb) {
+    private LocalDate criarLocalDateComDataValidadeCartao(Cartao cartaoDb) {
         var dataValidade = cartaoDb.getDataValidade();
         var dataValidadeSplit = dataValidade.split("/");
         var mes = Integer.parseInt(dataValidadeSplit[0]);

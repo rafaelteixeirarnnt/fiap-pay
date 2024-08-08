@@ -33,11 +33,11 @@ public class Pagamentos {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false, updatable = false)
-    private Clientes cliente;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_cartao", nullable = false, updatable = false)
-    private Cartoes cartao;
+    private Cartao cartao;
 
     @NotNull
     @Column(name = "vl_compra", nullable = false)

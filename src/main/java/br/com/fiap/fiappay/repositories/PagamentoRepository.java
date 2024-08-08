@@ -1,6 +1,6 @@
 package br.com.fiap.fiappay.repositories;
 
-import br.com.fiap.fiappay.models.Clientes;
+import br.com.fiap.fiappay.models.Cliente;
 import br.com.fiap.fiappay.models.Pagamentos;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,5 +12,5 @@ import java.util.UUID;
 @Repository
 public interface PagamentoRepository extends JpaRepository<Pagamentos, UUID> {
 
-    Page<Pagamentos> findByCliente(Clientes cliente, Pageable pageable);
+    Page<Pagamentos> findByCliente(Cliente cliente, Pageable pageable);
 }
