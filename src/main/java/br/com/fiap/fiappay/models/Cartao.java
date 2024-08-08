@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_cartoes", schema = "fiappay")
-public class Cartoes {
+public class Cartao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

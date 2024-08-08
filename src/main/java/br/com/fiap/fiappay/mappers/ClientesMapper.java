@@ -1,6 +1,6 @@
 package br.com.fiap.fiappay.mappers;
 
-import br.com.fiap.fiappay.models.Clientes;
+import br.com.fiap.fiappay.models.Cliente;
 import br.com.fiap.fiappay.vo.RequestClienteVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 public interface ClientesMapper {
 
     @Mapping(target = "id", ignore = true)
-    Clientes toEntity(RequestClienteVO requestClienteVO);
+    Cliente toEntity(RequestClienteVO requestClienteVO);
 
-    RequestClienteVO toVO(Clientes cliente);
+    RequestClienteVO toVO(Cliente cliente);
 }

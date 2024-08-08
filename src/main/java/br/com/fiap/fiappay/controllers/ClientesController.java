@@ -1,5 +1,6 @@
 package br.com.fiap.fiappay.controllers;
 
+import br.com.fiap.fiappay.models.Cliente;
 import br.com.fiap.fiappay.services.ClientesService;
 import br.com.fiap.fiappay.vo.RequestClienteVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static br.com.fiap.fiappay.utils.PathUtils.PATH_API;
 
@@ -31,9 +35,12 @@ public class ClientesController {
             @ApiResponse(responseCode = "401", description = "Erro de autorização"),
             @ApiResponse(responseCode = "500", description = "Erro de negócio")
     })
+
     public ResponseEntity<?> salvar(@RequestBody @Validated RequestClienteVO vo) {
-        this.service.salvar(vo);
-        return ResponseEntity.ok().build();
+        Cliente cliente = this.service.registrar(vo);
+        Map<String, String> idClienteMap = new HashMap<>();
+        idClienteMap.put("id_cliente", cliente.getId().toString());
+        return ResponseEntity.ok().body(idClienteMap);
     }
 
 }

@@ -28,13 +28,13 @@ public class CartoesClientes {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false, updatable = false)
-    private Clientes cliente;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_cartao", nullable = false, updatable = false)
-    private Cartoes cartao;
+    private Cartao cartao;
 
-    public CartoesClientes(Clientes cliente, Cartoes cartao) {
+    public CartoesClientes(Cliente cliente, Cartao cartao) {
         this.cliente = cliente;
         this.cartao = cartao;
     }

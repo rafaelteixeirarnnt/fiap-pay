@@ -2,7 +2,6 @@ package br.com.fiap.fiappay.services;
 
 import br.com.fiap.fiappay.controllers.exceptions.NegocioException;
 import br.com.fiap.fiappay.mappers.CartoesMapper;
-import br.com.fiap.fiappay.models.Cartoes;
 import br.com.fiap.fiappay.models.CartoesClientes;
 import br.com.fiap.fiappay.models.Clientes;
 import br.com.fiap.fiappay.repositories.CartoesClientesRepository;

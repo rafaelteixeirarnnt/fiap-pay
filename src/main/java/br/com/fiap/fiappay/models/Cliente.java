@@ -20,7 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_clientes", schema = "fiappay")
-public class Clientes {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

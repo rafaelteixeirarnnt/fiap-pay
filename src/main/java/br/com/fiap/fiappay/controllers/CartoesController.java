@@ -20,7 +20,7 @@ import static br.com.fiap.fiappay.utils.PathUtils.PATH_API;
 @RequiredArgsConstructor
 @RequestMapping(PATH_API)
 @Tag(name = "3 - Cartão", description = "API para gerenciamento de cartões dos clientes.")
-public class CartoesoController {
+public class CartoesController {
 
 
     private final CartoesService service;
