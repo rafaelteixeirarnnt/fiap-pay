@@ -18,6 +18,9 @@
             <column name="vl_compra" type="java.math.BigDecimal">
                 <constraints nullable="false" />
             </column>
+            <column name="dthr_compra" type="datetime">
+                <constraints nullable="false" />
+            </column>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="id_cliente"

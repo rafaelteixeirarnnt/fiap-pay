@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -41,5 +42,9 @@ public class Pagamentos {
     @NotNull
     @Column(name = "vl_compra", nullable = false)
     private BigDecimal valorCompra;
+
+    @NotNull
+    @Column(name = "dthr_compra", nullable = false)
+    private LocalDateTime dataCompra;
 
 }

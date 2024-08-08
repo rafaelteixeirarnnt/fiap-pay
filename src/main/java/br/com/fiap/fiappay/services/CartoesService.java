@@ -11,6 +11,7 @@ import br.com.fiap.fiappay.vo.RequestCartaoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -54,6 +55,7 @@ public class CartoesService {
         return cartao;
     }
 
+    @Transactional
     public synchronized void salvarNovoLimite(Cartoes cartao, BigDecimal valorCompra) {
         cartao.setLimite(cartao.getLimite().subtract(valorCompra));
         this.repository.save(cartao);

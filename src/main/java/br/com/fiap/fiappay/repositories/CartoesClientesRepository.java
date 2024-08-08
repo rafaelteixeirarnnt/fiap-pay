@@ -3,6 +3,8 @@ package br.com.fiap.fiappay.repositories;
 import br.com.fiap.fiappay.models.Cartoes;
 import br.com.fiap.fiappay.models.CartoesClientes;
 import br.com.fiap.fiappay.models.Clientes;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +16,5 @@ public interface CartoesClientesRepository extends JpaRepository<CartoesClientes
 
     Optional<CartoesClientes> findByClienteAndCartao(Clientes cliente, Cartoes cartao);
 
+    Page<CartoesClientes> findByCliente(Clientes cliente, Pageable pageable);
 }
