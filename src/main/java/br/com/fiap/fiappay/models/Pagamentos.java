@@ -44,7 +44,7 @@ public class Pagamentos {
     private BigDecimal valorCompra;
 
     @NotNull
-    @Column(name = "dthr_compra", nullable = false)
+    @Column(name = "dt_compra", nullable = false)
     private LocalDateTime dataCompra;
 
 }

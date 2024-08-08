@@ -1,7 +1,6 @@
 package br.com.fiap.fiappay.services;
 
 import br.com.fiap.fiappay.controllers.exceptions.NegocioException;
-import br.com.fiap.fiappay.controllers.exceptions.SemLimiteException;
 import br.com.fiap.fiappay.models.Cartao;
 import br.com.fiap.fiappay.models.Cliente;
 import br.com.fiap.fiappay.models.Pagamentos;
@@ -16,7 +15,11 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,27 +35,27 @@ public class PagamentoService {
 
     @Transactional
     public ResponsePagamentoVO registrarPagamento(RequestPagamentoVO vo) {
-
         var cliente = this.clientesService.buscarPorCpf(vo.cpf()).orElseThrow(() -> new NegocioException("Cliente não localizado"));
-        var cartao = this.cartoesService.obterCartaoPorNumeroDataValidadeCvvECliente(vo.numero(), vo.dataValidade(), vo.cvv(), cliente);
+        var cartao = localizarCartao(vo, cliente.getCartoes()).orElseThrow(() -> new NegocioException("Dados do cartão inválidos"));
+        BigDecimal saldoDisponivel = cartao.getSaldoDisponivel();
+        BigDecimal valorSolicitado = vo.valor();
 
-        var pagamento = new Pagamentos(null, cliente, cartao, vo.valor(), LocalDateTime.now());
+        this.cartoesService.validarDataValidade(cartao);
+        if(saldoDisponivel.compareTo(valorSolicitado) < 0){
+            throw new NegocioException("Saldo insuficiente");
+        }
 
-        validarSeLimitesDeCartaoSaoSuficientes(pagamento, cartao);
-        validarSeCartaoDentroDoPrazoDeValidade(cartao);
-        this.cartoesService.salvarNovoLimite(cartao, pagamento.getValorCompra());
-
+        BigDecimal novoSaldo = saldoDisponivel.subtract(valorSolicitado);
+        cartao.setSaldoDisponivel(novoSaldo);
+        cartoesService.salvar(cartao);
+        var pagamento = new Pagamentos(null, cliente, cartao, valorSolicitado, LocalDateTime.now());
         return new ResponsePagamentoVO(this.repository.save(pagamento).getId());
     }
 
-    private void validarSeCartaoDentroDoPrazoDeValidade(Cartao cartao) {
-        this.cartoesService.cartaoehValido(cartao);
-    }
-
-    private void validarSeLimitesDeCartaoSaoSuficientes(Pagamentos compra, Cartao cartao) {
-        if (cartao.getLimite().doubleValue() < compra.getValorCompra().doubleValue()) {
-            throw new SemLimiteException("Limite do cartão insuficiente");
-        }
+    private Optional<Cartao> localizarCartao(RequestPagamentoVO vo, List<Cartao> cartoes) {
+        return cartoes.stream().filter(c ->
+                c.getNumero().equals(vo.numero()) && c.getCvv().equals(vo.cvv()) && c.getDataValidade().equals(vo.dataValidade())
+        ).findFirst();
     }
 
     public Page<ResponseConsultaPagamentoClienteVO> obterPagamentosPorCliente(String cpf, Pageable pageable) {
@@ -66,6 +69,7 @@ public class PagamentoService {
                             CARTAO_CREDITO,
                             APROVADO));
         } catch (PropertyReferenceException e) {
+            System.out.println(e);
             throw new NegocioException("Parâmetro de ordenação inválido");
         }
     }

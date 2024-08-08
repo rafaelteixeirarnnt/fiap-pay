@@ -68,7 +68,7 @@ public class PagamentoController {
             @Schema(description = "CPF do cliente", example = "12345678909")
             @PathVariable String cpf,
             @Parameter(description = "Parâmetros de paginação e ordenação", schema = @Schema(implementation = PageableExample.class))
-            @PageableDefault(sort = "dataPagamento", direction = DESC) Pageable pageable) {
+            @PageableDefault(sort = "dataCompra", direction = DESC) Pageable pageable) {
         return ResponseEntity.ok(service.obterPagamentosPorCliente(cpf, pageable));
     }
 

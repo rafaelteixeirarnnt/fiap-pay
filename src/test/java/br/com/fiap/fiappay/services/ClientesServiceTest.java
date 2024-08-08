@@ -5,8 +5,6 @@ import br.com.fiap.fiappay.mappers.ClientesMapper;
 import br.com.fiap.fiappay.models.Cliente;
 import br.com.fiap.fiappay.repositories.ClientesRepository;
 import br.com.fiap.fiappay.vo.RequestClienteVO;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,6 +99,17 @@ public class ClientesServiceTest {
             assertEquals("Cliente já registrado", e.getMessage());
         }
         verify(clientesRepository, never()).save(any(Cliente.class));
+    }
+
+    @Test
+    void deveBuscarClientePorCpf() {
+        clientesService = new ClientesService(clientesMapper, clientesRepository);
+        when(clientesRepository.findByCpf(anyString())).thenReturn(Optional.of(new Cliente()));
+
+        Optional<Cliente> cliente = clientesService.buscarPorCpf("1111111111");
+
+        assertTrue(cliente.isPresent());
+        verify(clientesRepository, times(1)).findByCpf("1111111111");
     }
 
 }

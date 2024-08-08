@@ -5,10 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <include file="/db/changelog/001/0001-criando-schema.xml"/>
-    <include file="/db/changelog/001/0002-criando-tabela-usuarios.xml"/>
-    <include file="/db/changelog/001/0003-criando-tabela-clientes.xml"/>
-    <include file="/db/changelog/001/0004-criando-tabela-cartoes.xml"/>
-    <include file="/db/changelog/001/0005-criando-tabela-cartoes-clientes.xml"/>
-    <include file="/db/changelog/001/0006-criando-tabela-pagamento.xml"/>
+    <include file="/db/changelog/001/0002-criando-tabelas.xml"/>
 
 </databaseChangeLog>

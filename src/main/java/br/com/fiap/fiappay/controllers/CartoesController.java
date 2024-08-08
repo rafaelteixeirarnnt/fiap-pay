@@ -38,7 +38,7 @@ public class CartoesController {
             @ApiResponse(responseCode = "500", description = "Erro de negócio")
     })
     public ResponseEntity gerarCartao(@RequestBody @Validated RequestCartaoVO vo) {
-        this.service.salvar(vo);
+        this.service.gerarNovoCartao(vo);
         return ResponseEntity.ok().build();
     }
 

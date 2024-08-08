@@ -1,5 +1,6 @@
 package br.com.fiap.fiappay.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public record RequestPagamentoVO(@Schema(description = "CPF do Cliente", example
                                  @NotNull(message = "Data de validade não pode ser nula")
                                  @NotBlank(message = "Data de validade não pode ser vazia")
                                  @Pattern(regexp = "\\d{2}/\\d{2}", message = "Data de validade deve estar no formato MM/YY")
+                                 @JsonProperty(value = "data_validade")
                                  String dataValidade,
 
                                  @NotNull(message = "CVV não pode ser nulo")

@@ -1,11 +1,6 @@
 package br.com.fiap.fiappay.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +20,7 @@ public class Cartao {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "vl_limite", nullable = false, scale = 2)
+    @Column(name = "vl_limite", nullable = false, precision = 12, scale = 2)
     private BigDecimal limite;
 
     @Column(name = "tx_numero", nullable = false, length = 16)
@@ -36,5 +31,12 @@ public class Cartao {
 
     @Column(name = "tx_cvv", nullable = false, length = 3)
     private String cvv;
+
+    @Column(name = "vl_saldo", nullable = false, precision = 12, scale = 2)
+    private BigDecimal saldoDisponivel;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
 }
