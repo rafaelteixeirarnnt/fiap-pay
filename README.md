@@ -68,6 +68,7 @@ implementação de novas funcionalidades, minimizando o impacto em outras partes
 	•	Springdoc OpenAPI: Ferramenta para gerar documentação automática da API seguindo as especificações OpenAPI/Swagger.
 	•	MapStruct: Framework de mapeamento de objetos que simplifica a conversão entre DTOs e entidades.
 	•	Maven: Ferramenta de automação de build e gerenciamento de dependências.
+    •	Liquibase: Ferramenta para controle de versão do banco de dados, garantindo que o esquema do banco esteja sempre sincronizado com as mudanças de código e facilitando a manutenção e evolução da base de dados.
 	•	Docker (opcional): Containerização da aplicação para garantir consistência e facilidade de implantação em diferentes ambientes.
 
 ### Requisitos
@@ -80,41 +81,34 @@ implementação de novas funcionalidades, minimizando o impacto em outras partes
 
 Para executar o projeto, basta clonar o repositório e executar o comando abaixo:
 
-#### Clonando o Repositório
+### Clonando o Repositório
 
 ```shell
     git clone https://github.com/rafaelteixeirarnnt/fiap-pay.git
     cd fiap-pay
 ```
 
-<br />
-
-#### Construindo o Projeto
+### Construindo o Projeto
 
 ```shell
     mvn clean install
 ```
 
-<br />
-
-#### Executando o Projeto via Maven
+### Executando o Projeto via Maven
 
 ```shell
     mvn spring-boot:run
 ```
 
-<br />
-
-#### Executando o projeto via Docker
+### Executando o projeto via Docker
 
 ```shell
     sudo docker-compose -f prod-compose.yaml up
 ```
 
-**Observação: Se você já executou o projeto via Maven anteriormente, é recomendável remover qualquer referência ou
-configuração pré-existente relacionada ao Docker para evitar conflitos.**
+**Observação:** Se você já executou o projeto anteriormente usando Maven, é recomendável remover quaisquer containers Docker locais associados ao projeto. Isso é crucial para evitar problemas de conflito, especialmente com o banco de dados. Para garantir que as migrações do Liquibase sejam aplicadas corretamente e que o ambiente esteja limpo, certifique-se de excluir os containers Docker antigos antes de iniciar o projeto novamente com Docker.
 
-#### Considerações Finais
+### Considerações Finais
 
 O FIAP Pay foi projetado com foco em segurança, escalabilidade e facilidade de manutenção. A integração com Docker
 facilita a implantação em diferentes ambientes, enquanto o uso de tecnologias como Spring Security e Spring Data JPA
