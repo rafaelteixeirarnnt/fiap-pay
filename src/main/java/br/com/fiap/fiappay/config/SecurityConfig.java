@@ -1,9 +1,11 @@
 package br.com.fiap.fiappay.config;
 
 import br.com.fiap.fiappay.repositories.UsuariosRepository;
+import br.com.fiap.fiappay.security.JwtAuthenticationEntryPoint;
 import br.com.fiap.fiappay.security.JwtAuthenticationFilter;
 import br.com.fiap.fiappay.services.CustomUserDetailsService;
 import br.com.fiap.fiappay.services.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,7 @@ import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
@@ -35,6 +38,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**"
     };
+
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public UserDetailsService userDetailsService(UsuariosRepository repository) {
@@ -51,6 +56,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .build();
     }
 

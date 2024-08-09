@@ -23,7 +23,7 @@ import static br.com.fiap.fiappay.utils.PathUtils.PATH_API;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(PATH_API)
-@Tag(name = "2 - Clientes", description = "API para registro de clientes")
+@Tag(name = "2 - Cliente", description = "API para registro de clientes")
 public class ClientesController {
 
     private final ClientesService service;
